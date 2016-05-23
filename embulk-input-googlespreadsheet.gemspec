@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "embulk-input-googlespreadsheet"
-  spec.version       = "0.2.0"
+  spec.version       = "0.2.1"
   spec.authors       = ["yang-xu"]
   spec.summary       = "Googlespreadsheet input plugin for Embulk"
   spec.description   = "Fetches data from Googlespreadsheet."

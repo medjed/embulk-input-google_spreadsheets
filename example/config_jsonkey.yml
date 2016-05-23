@@ -1,0 +1,14 @@
+in:
+  type: googlespreadsheet
+  auth_method: json_key
+  account: 'service_account'
+  json_keyfile: 'example/private_key.json'
+  spreadsheet_key: spreadsheet_key
+  worksheet_title: worksheet_title
+  start_row: 2
+  start_column: 3
+  columns:
+    - {name: first, type: string}
+    - {name: second, type: string}
+out:
+  type: stdout

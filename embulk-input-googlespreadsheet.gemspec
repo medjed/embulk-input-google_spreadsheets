@@ -14,7 +14,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'embulk', ['> 0.8.1']
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency "bundler-dena"
   spec.add_development_dependency 'rake'
 
   spec.add_runtime_dependency "google_drive", ">= 2.0.0.beta"

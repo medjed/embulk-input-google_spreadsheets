@@ -1,6 +1,7 @@
 require "google_drive"
 require "signet/oauth_2/client"
 require "json"
+require_relative 'error'
 
 
 module Embulk

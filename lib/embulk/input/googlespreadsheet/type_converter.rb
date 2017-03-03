@@ -1,7 +1,7 @@
 require "json"
 require "time"
 require "tzinfo"
-
+require_relative 'error'
 
 module Embulk
   module Input

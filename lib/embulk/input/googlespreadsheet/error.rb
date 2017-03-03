@@ -3,10 +3,13 @@ module Embulk
     class Googlespreadsheet < InputPlugin
       module Traceable
         def initialize(e)
-          message = "(#{e.class}) #{e}.\n\t#{e.backtrace.join("\t\n")}\n"
+          message = "(#{e.class}) #{e}.\n"
+          message << "\t#{e.backtrace.join("\t\n")}\n" if e.respond_to?(:backtrace)
+
           while e.respond_to?(:cause) and e.cause
             # Java Exception cannot follow the JRuby causes.
-            message << "Caused by (#{e.cause.class}) #{e.cause}\n\t#{e.cause.backtrace.join("\t\n")}\n"
+            message << "Caused by (#{e.cause.class}) #{e.cause}\n"
+            message << "\t#{e.cause.backtrace.join("\t\n")}\n" if e.cause.respond_to?(:backtrace)
             e = e.cause
           end
 

@@ -6,10 +6,6 @@ require "tzinfo"
 module Embulk
   module Input
     class Googlespreadsheet < InputPlugin
-      class CompatibilityError < StandardError; end
-      class TypeCastError < StandardError; end
-      class UnknownTypeError < StandardError; end
-
       class TypeConverter
 
         DEFAULT_TIMESTAMP_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -18,7 +14,7 @@ module Embulk
         def convert(columns, values)
           results = Array.new
           if columns.length != values.length
-            raise CompatibilityError, "Columns defined and data fetched are imcompatible."
+            raise CompatibilityError.new("Columns defined and data fetched are imcompatible.")
           end
 
           (0...columns.length).each do |index|
@@ -43,7 +39,7 @@ module Embulk
             when "json"
               results << to_json(values[index].to_s)
             else
-              raise UnknownTypeError, "Type `#{type}` is not supported by Embulk."
+              raise UnknownTypeError.new("Type `#{type}` is not supported by Embulk.")
             end
           end
           results
@@ -55,7 +51,7 @@ module Embulk
           elsif value.downcase == "false" || value == "0"
             false
           else
-            raise TypeCastError, "Cannot cast #{value} to embulk type boolean"
+            raise TypeCastError.new("Cannot cast #{value} to embulk type boolean")
           end
         end
 
@@ -66,7 +62,7 @@ module Embulk
           begin
             strptime_with_zone(value, format, timezone)
           rescue => e
-            raise TypeCastError, e.message
+            raise TypeCastError.new(e)
           end
         end
 
@@ -74,7 +70,7 @@ module Embulk
           begin
             JSON.generate(JSON.parse(value))
           rescue => e
-            raise TypeCastError, e.message
+            raise TypeCastError.new(e)
           end
         end
 

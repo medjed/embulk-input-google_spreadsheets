@@ -6,7 +6,6 @@ require "json"
 module Embulk
   module Input
     class Googlespreadsheet < InputPlugin
-      class Error < StandardError; end
 
       class GssSession
 
@@ -29,7 +28,7 @@ module Embulk
             key = JSON.parse(@json_keyfile)
           rescue => e
             Embulk.logger.error { "embulk-input-googlespreadsheet: failed to process keyfile:#{@keyfile}" }
-            raise Error, e.message
+            raise ConfigError.new(e)
           end
 
           case @auth_method
@@ -54,20 +53,20 @@ module Embulk
             )
 
           else
-            raise Error, "Unknown auth_method: #{@auth_method}"
+            raise ConfigError.new("Unknown auth_method: #{@auth_method}")
           end
 
           begin
             @client.fetch_access_token!
             @session = GoogleDrive.login_with_oauth(@client.access_token)
           rescue => e
-            raise Error, e.message
+            raise ConfigError.new(e)
           end
         end
 
         def fetch(start_row, start_col, end_row, end_col)
           if (end_row != -1 && start_row > end_row) || start_col > end_col
-            raise Error, "Area not exist. Please check start&end for row and column."
+            raise ConfigError.new("Area not exist. Please check start&end for row and column.")
           end
 
           begin
@@ -109,9 +108,8 @@ module Embulk
             end
             result
           rescue => e
-            msg = e.message
-            Embulk.logger.error { "embulk-input-googlespreadsheet: failed to fetch data from spreadsheet:#{@gss_key}, worksheet:#{@ws_title}, start_row:#{start_row}, end_row:#{end_row}, start_column:#{start_col}, end_column:#{end_col}, error:#{msg}" }
-            raise Error, e.message
+            Embulk.logger.error { "embulk-input-googlespreadsheet: failed to fetch data from spreadsheet:#{@gss_key}, worksheet:#{@ws_title}, start_row:#{start_row}, end_row:#{end_row}, start_column:#{start_col}, end_column:#{end_col}, error:#{e}" }
+            raise DataError.new(e)
           end
         end
 

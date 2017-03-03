@@ -1,8 +1,7 @@
 module Embulk
   module Input
     class Googlespreadsheet < InputPlugin
-
-      class ConfigError < ::Embulk::ConfigError
+      module Traceable
         def initialize(e)
           message = "(#{e.class}) #{e}.\n\t#{e.backtrace.join("\t\n")}\n"
           while e.respond_to?(:cause) and e.cause
@@ -15,17 +14,12 @@ module Embulk
         end
       end
 
-      class DataError < ::Embulk::DataError
-        def initialize(e)
-          message = "(#{e.class}) #{e}.\n\t#{e.backtrace.join("\t\n")}\n"
-          while e.respond_to?(:cause) and e.cause
-            # Java Exception cannot follow the JRuby causes.
-            message << "Caused by (#{e.cause.class}) #{e.cause}\n\t#{e.cause.backtrace.join("\t\n")}\n"
-            e = e.cause
-          end
+      class ConfigError < ::Embulk::ConfigError
+        include Traceable
+      end
 
-          super(message)
-        end
+      class DataError < ::Embulk::DataError
+        include Traceable
       end
 
       class CompatibilityError < DataError; end

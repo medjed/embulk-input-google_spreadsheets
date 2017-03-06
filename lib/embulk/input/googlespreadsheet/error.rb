@@ -3,7 +3,8 @@ module Embulk
     class Googlespreadsheet < InputPlugin
       module Traceable
         def initialize(e)
-          message = "(#{e.class}) #{e}\n"
+          message = e.is_a?(String) ? "" : "(#{e.class}) "
+          message << "#{e}\n"
           message << "\tat #{e.backtrace.join("\n\tat ")}\n" if e.respond_to?(:backtrace)
 
           while e.respond_to?(:cause) and e.cause

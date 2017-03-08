@@ -72,10 +72,7 @@ module Embulk
 
           begin
             ws = session.spreadsheet_by_key(@gss_key).worksheet_by_title(@ws_title)
-            if ws.nil?
-              Embulk.logger.info { "embulk-input-googlespreadsheet: target worksheet does not exist." }
-              return
-            end
+            raise ConfigError.new("target worksheet `#{@ws_title}` does not exist.") unless ws
 
             if end_row == -1
               (start_row..ws.num_rows + 1).each do |row|

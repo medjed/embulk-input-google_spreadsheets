@@ -1,10 +1,10 @@
 Gem::Specification.new do |spec|
   spec.name          = "embulk-input-googlespreadsheet"
-  spec.version       = "0.2.1"
-  spec.authors       = ["yang-xu"]
+  spec.version       = "0.3.0"
+  spec.authors       = ["yang-xu", "Civitaspo"]
   spec.summary       = "Googlespreadsheet input plugin for Embulk"
   spec.description   = "Fetches data from Googlespreadsheet."
-  spec.email         = ["xu.yang.9.65@gmail.com"]
+  spec.email         = ["xu.yang.9.65@gmail.com", "civitaspo@gmail.com"]
   spec.licenses      = ["MIT"]
   spec.homepage      = "https://github.com/apollocarlos/embulk-input-googlespreadsheet"
 

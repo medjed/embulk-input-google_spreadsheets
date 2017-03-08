@@ -14,7 +14,7 @@ module Embulk
         def convert(columns, values)
           results = Array.new
           if columns.length != values.length
-            raise CompatibilityError.new("Columns defined and data fetched are imcompatible.")
+            raise UnmatchedNumberOfColomnsError.new("Number of defined Columns and fetched data are unmatched.")
           end
 
           (0...columns.length).each do |index|

@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Fetches data from Googlespreadsheet."
   spec.email         = ["xu.yang.9.65@gmail.com", "civitaspo@gmail.com"]
   spec.licenses      = ["MIT"]
-  spec.homepage      = "https://github.com/apollocarlos/embulk-input-googlespreadsheet"
+  spec.homepage      = "https://github.com/medjed/embulk-input-googlespreadsheet"
 
   spec.files         = `git ls-files`.split("\n") + Dir["classpath/*.jar"]
   spec.test_files    = spec.files.grep(%r{^(test|spec)/})

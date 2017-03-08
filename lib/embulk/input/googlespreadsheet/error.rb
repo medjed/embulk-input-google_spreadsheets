@@ -26,7 +26,7 @@ module Embulk
         include Traceable
       end
 
-      class CompatibilityError < DataError; end
+      class UnmatchedNumberOfColomnsError < DataError; end
       class TypeCastError      < DataError; end
       class UnknownTypeError   < DataError; end
     end

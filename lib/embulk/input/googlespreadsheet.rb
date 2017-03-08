@@ -67,13 +67,14 @@ module Embulk
 
       def init
         @session = GssSession.new(@task)
+        @converter = TypeConverter.new
       end
 
       def run
         end_column = @task["start_column"] + @task["columns"].length - 1
         result = @session.fetch(@task["start_row"], @task["start_column"], @task["end_row"], end_column)
         result.each do |line|
-          page_builder.add(TypeConverter.new.convert(@task["columns"], line))
+          page_builder.add(@converter.convert(@task["columns"], line))
         end
         page_builder.finish
 

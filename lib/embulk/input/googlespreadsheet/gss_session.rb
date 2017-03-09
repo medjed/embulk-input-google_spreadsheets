@@ -87,6 +87,8 @@ module Embulk
 
               range = "#{@ws_title}!#{convert_col_name(start_col)}#{start_row_num}:#{convert_col_name(end_col)}#{end_row_num}"
 
+              Embulk.logger.debug { "embulk-input-googlespreadsheet: fetch data from spreadsheet:#{@gss_key}, worksheet:#{@ws_title}, range:#{range}"}
+
               breakable = false
               @session.get_spreadsheet_values(@gss_key, range).values.each do |row|
                 if end_row == -1 and row.all?{|v| v.nil? or v.empty?}

@@ -72,8 +72,7 @@ module Embulk
 
       def run
         end_column = @task["start_column"] + @task["columns"].length - 1
-        result = @session.fetch(@task["start_row"], @task["start_column"], @task["end_row"], end_column)
-        result.each do |line|
+        @session.fetch(@task["start_row"], @task["start_column"], @task["end_row"], end_column) do |values|
           page_builder.add(@converter.convert(@task["columns"], line))
         end
         page_builder.finish

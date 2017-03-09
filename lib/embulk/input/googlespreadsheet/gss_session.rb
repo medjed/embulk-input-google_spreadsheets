@@ -74,37 +74,20 @@ module Embulk
             ws = session.spreadsheet_by_key(@gss_key).worksheet_by_title(@ws_title)
             raise ConfigError.new("target worksheet `#{@ws_title}` does not exist.") unless ws
 
-            if end_row == -1
-              (start_row..ws.num_rows + 1).each do |row|
-                all_empty = 1
-                (start_col..end_col).each do |col|
-                  if ws[row, col] != ""
-                    all_empty = 0
-                    break
-                  end
-                end
-                if all_empty == 1
-                  end_row = row - 1
-                  break
-                end
+            row_num = 0
+            while true do
+              row_num += 1
+
+              values = (start_col..end_col).map do |col_num|
+                ws[row_num, col_num]
               end
+              break if end_row == -1 and values.all?{|v| v.nil? or v.empty?}
+
+              yield(values)
+
+              break if end_row != -1 and row_num >= end_row
             end
 
-            Embulk.logger.debug { "embulk-input-googlespreadsheet: fetch data from spreadsheet:#{@gss_key}, worksheet:#{@ws_title}, start_row:#{start_row}, end_row:#{end_row}, start_column:#{start_col}, end_column:#{end_col}" }
-
-            result = Array.new
-            (start_row..end_row).each do |row|
-              line = Array.new
-              (start_col..end_col).each do |col|
-                if ws[row, col].to_s.empty?
-                  line << String.new
-                else
-                  line << ws[row, col].gsub(/(\n|\t)/, " ") unless ws[row, col].to_s.empty?
-                end
-              end
-              result << line
-            end
-            result
           rescue => e
             Embulk.logger.error { "embulk-input-googlespreadsheet: failed to fetch data from spreadsheet:#{@gss_key}, worksheet:#{@ws_title}, start_row:#{start_row}, end_row:#{end_row}, start_column:#{start_col}, end_column:#{end_col}, error:#{e}" }
             raise DataError.new(e)

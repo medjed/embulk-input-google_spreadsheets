@@ -18,8 +18,10 @@ module Embulk
           end
 
           (0...columns.length).each do |index|
+            value = values[index].to_s
+
             # empyty values still go empty
-            if values[index] == ""
+            if value == ""
               results << ""
               next
             end
@@ -27,17 +29,17 @@ module Embulk
             type = columns[index]["type"].downcase
             case type
             when "boolean"
-              results << to_boolean(values[index].to_s)
+              results << to_boolean(value)
             when "long"
-              results << values[index].to_s.to_i
+              results << value.to_i
             when "double"
-              results << values[index].to_s.to_f
+              results << value.to_f
             when "string"
-              results << values[index].to_s
+              results << value.to_s
             when "timestamp"
-              results << to_timestamp(values[index].to_s, columns[index])
+              results << to_timestamp(value, columns[index])
             when "json"
-              results << to_json(values[index].to_s)
+              results << to_json(value)
             else
               raise UnknownTypeError.new("Type `#{type}` is not supported by Embulk.")
             end

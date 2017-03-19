@@ -4,3 +4,7 @@
 /.bundle/
 /Gemfile.lock
 vendor/
+bin/
+.ruby-version
+example/authorized_user_credentials.json
+example/service_account_credentials.json

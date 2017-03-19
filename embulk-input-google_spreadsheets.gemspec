@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'embulk', '>= 0.8.1'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'dotenv'
+  spec.add_development_dependency 'highline'
 
   spec.add_dependency 'google-api-client', '>= 0.9.15'
   spec.add_dependency 'tzinfo'

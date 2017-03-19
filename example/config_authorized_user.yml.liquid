@@ -1,0 +1,25 @@
+in:
+  type: google_spreadsheets
+  auth_method: authorized_user
+  json_keyfile:
+    content: |
+      {
+        "client_id": "{{ env.GOOGLE_AUTH_CLIENT_ID }}",
+        "client_secret": "{{ env.GOOGLE_AUTH_CLIENT_SECRET }}",
+        "refresh_token": "{{ env.GOOGLE_AUTH_REFRESH_TOKEN }}"
+      }
+  spreadsheet_url: https://docs.google.com/spreadsheets/d/1Cxz-LudQuhRAGZL8mBoHs6mRnpjODpyF4Rwc5UYoV1E/edit#gid=0
+  worksheet_title: sheet1
+  start_column: 2
+  default_timezone: Asia/Tokyo
+  null_string: '\N'
+  columns:
+    - {name: _c1, type: boolean}
+    - {name: _c2, type: string}
+    - {name: _c3, type: long}
+    - {name: _c4, type: double}
+    - {name: _c5, type: timestamp, format: '%Y-%m-%d %H:%M:%S.%N'}
+    - {name: _c6, type: timestamp, format: '%Y-%m-%d'}
+
+out:
+  type: stdout

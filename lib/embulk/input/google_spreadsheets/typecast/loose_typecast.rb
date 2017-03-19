@@ -53,7 +53,7 @@ module Embulk
             end
           end
 
-          def as_timestamp(value, timestamp_format, timezone)
+          def as_timestamp(value, timestamp_format = nil, timezone = nil)
             begin
               super
             rescue => e

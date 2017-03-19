@@ -123,8 +123,8 @@ module Embulk
             end
           end
 
-          BOOLEAN_TRUE_VALUES = %w(yes true 1)
-          BOOLEAN_FALSE_VALUES = %w(no false 0)
+          BOOLEAN_TRUE_VALUES = %w(yes y true t 1)
+          BOOLEAN_FALSE_VALUES = %w(no n false f 0)
 
           def as_boolean(value)
             return nil if null_string?(value)
@@ -157,7 +157,7 @@ module Embulk
             end
           end
 
-          def as_timestamp(value, timestamp_format, timezone)
+          def as_timestamp(value, timestamp_format = nil, timezone = nil)
             return nil if null_string?(value)
 
             case value
@@ -201,34 +201,26 @@ module Embulk
           def as_json(value)
             return nil if null_string?(value)
 
-            # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/lib/embulk/page_builder.rb#L20
-            # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/embulk-core/src/main/java/org/embulk/spi/util/DynamicPageBuilder.java#L97
-            # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/embulk-core/src/main/java/org/embulk/spi/util/DynamicColumnSetterFactory.java#L66
-            # cf. https://github.com/embulk/embulk/blob/997c7beb89d42122f7cb6fe844f8ca79a3cb666c/embulk-core/src/main/java/org/embulk/spi/util/dynamic/JsonColumnSetter.java#L50
-            # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/embulk-core/src/main/java/org/embulk/spi/util/dynamic/AbstractDynamicColumnSetter.java#L47
-            # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/embulk-core/src/main/java/org/embulk/spi/json/RubyValueApi.java#L57
-            # NOTE: As long as reading the above code, any object can be set as Json
-            #       (that must be primitive type or must have `to_msgpack` method.)
-            #
             # NOTE: This method must do `JSON.parse` if `value` is String. ref. https://github.com/embulk/embulk/issues/499
             case value
-            when nil, TrueClass, FalseClass, Integer, Float, Array, Hash
+            when nil, Array, Hash
               value
-              # when TrueClass  then ... => merge with nil case
-              # when FalseClass then ... => merge with nil case
-              # when Integer    then ... => merge with nil case
-              # when Float      then ... => merge with nil case
-              # when Array      then ... => merge with nil case
-              # when Hash       then ... => merge with nil case
             when String
               begin
                 JSON.parse(value)
               rescue JSON::ParserError => e
                 raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to JSON: \"#{value}\" because of '#{e}'"
               end
-            when Time
+              # when TrueClass  then ... => merge with Time case
+              # when FalseClass then ... => merge with Time case
+              # when Integer    then ... => merge with Time case
+              # when Float      then ... => merge with Time case
+              # when Array      then ... => merge with nil case
+              # when Hash       then ... => merge with nil case
+            when TrueClass, FalseClass, Integer, Float, Array, Hash, Time
               # TODO: support Time class. Now call Exception to avoid format/timezone trouble.
               raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast Time to JSON: \"#{value}\""
+
             else
               raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to JSON: \"#{value}\""
             end

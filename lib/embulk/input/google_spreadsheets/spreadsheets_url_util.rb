@@ -4,7 +4,9 @@ module Embulk
       module SpreadsheetsUrlUtil
 
         def self.capture_id(url)
-          url.scan(capture_id_regex).first.first
+          scanned = url.scan(capture_id_regex).first
+          return unless scanned
+          scanned.first
         end
 
         def self.base_url

@@ -1,5 +1,6 @@
 require_relative 'typecast_factory'
 
+
 module Embulk
   module Input
     class GoogleSpreadsheets < InputPlugin

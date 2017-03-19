@@ -27,7 +27,7 @@ module Embulk
           when 'application_default'
             return Google::Auth.get_application_default([scope])
           else
-            raise ConfigError, "Unknown auth method: #{auth_method}"
+            raise ConfigError.new("Unknown auth method: #{auth_method}")
           end
         end
 

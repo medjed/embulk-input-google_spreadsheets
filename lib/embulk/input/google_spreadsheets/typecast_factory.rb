@@ -1,13 +1,15 @@
+require_relative 'error'
+
 module Embulk
   module Input
     class GoogleSpreadsheets < InputPlugin
       module TypecastFactory
         def self.create(type, task)
-          raise ConfigError.new("`embulk-input-google_spreadsheets`: unknown typecast '#{type}'") if type.nil? or !type.is_a?(String)
+          raise GoogleSpreadsheets::ConfigError.new("`embulk-input-google_spreadsheets`: unknown typecast '#{type}'") if type.nil? or !type.is_a?(String)
 
           type = type.downcase
           path = build_typecast_class_path(type)
-          raise ConfigError.new("`embulk-input-google_spreadsheets`: Typecast class path does not exist '#{path}'") unless File.exist?(path)
+          raise GoogleSpreadsheets::ConfigError.new("`embulk-input-google_spreadsheets`: Typecast class path does not exist '#{path}'") unless File.exist?(path)
 
           require path
           typecast_class(type).new(task)

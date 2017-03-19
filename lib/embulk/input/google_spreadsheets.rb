@@ -25,10 +25,11 @@ module Embulk
       end
 
       class CustomColumns
+        # NOTE: if raised, rescue and re-raise as Embulk::ConfigError
         def self.load(v)
-          raise ConfigError.new("`embulk-input-google_spreadsheets`: Invalid value '#{v}' for :array_of_hash") unless v.is_a?(Array)
+          raise "`embulk-input-google_spreadsheets`: Invalid value '#{v}' for :array_of_hash" unless v.is_a?(Array)
           v.each do |c|
-            raise ConfigError.new("`embulk-input-google_spreadsheets`: Invalid value '#{v}' for :array_of_hash") unless c.is_a?(Hash)
+            raise "`embulk-input-google_spreadsheets`: Invalid value '#{v}' for :array_of_hash" unless c.is_a?(Hash)
           end
 
           complete_default(v.dup)
@@ -100,13 +101,13 @@ module Embulk
         #
         #   if `auth_method` is `compute_engine` or `application_default`, this
         #   option is not required.
-        task['json_keyfile']           = config.param('json_keyfile',           LocalFile)
-        task['spreadsheet_url']        = config.param('spreadsheet_url',        :string)
+        task['json_keyfile']           = config.param('json_keyfile',           LocalFile, default: nil)
+        task['spreadsheets_url']       = config.param('spreadsheets_url',        :string)
         task['worksheet_title']        = config.param('worksheet_title',        :string)
         task['start_column']           = config.param('start_column',           :integer, default: 1)
         task['start_row']              = config.param('start_row',              :integer, default: 1)
         task['end_row']                = config.param('end_row',                :integer, default: -1)
-        task['max_fetch_rows']         = config.param('max_fetch_rows',         :integer, default: 100000)
+        task['max_fetch_rows']         = config.param('max_fetch_rows',         :integer, default: 10000)
         task['null_string']            = config.param('null_string',            :string,  default: '')
         task['stop_on_invalid_record']  = config.param('stop_on_invalid_record', :bool,    default: true)
         # columns: this option supposes an array of hash has the below structure.
@@ -115,9 +116,9 @@ module Embulk
         #   - format
         #   - timezone
         #   - typecast: default: strict
-        CustomColumns.default_format   = task['default_timestamp_format'] = config.param('default_timestamp_format', :string, default: '%Y-%m-%d %H:%M:%S.%N %z')
-        CustomColumns.default_timezone = task['default_timezone']        = config.param('default_timezone',        :string, default: 'UTC')
-        CustomColumns.default_typecast = task['default_typecast']        = config.param('default_typecast',        :string, default: 'strict')
+        CustomColumns.default_format   = task['default_timestamp_format'] = config.param('default_timestamp_format', :string, default: CustomColumns.default_format)
+        CustomColumns.default_timezone = task['default_timezone']        = config.param('default_timezone',        :string, default: CustomColumns.default_timezone)
+        CustomColumns.default_typecast = task['default_typecast']        = config.param('default_typecast',        :string, default: CustomColumns.default_typecast)
         task['columns'] = config.param('columns', CustomColumns)
 
         task['end_column'] = task['start_column'] + task['columns'].length - 1

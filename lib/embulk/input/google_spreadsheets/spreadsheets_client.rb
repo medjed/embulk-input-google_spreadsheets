@@ -7,10 +7,10 @@ module Embulk
 
       class SpreadsheetsClient
 
-        attr_accessor :spreadsheet_url, :worksheet_title, :auth, :pager
+        attr_accessor :spreadsheets_url, :worksheet_title, :auth, :pager
 
         def initialize(task, auth:, pager:)
-          @spreadsheet_url = task['spreadsheet_url']
+          @spreadsheets_url = task['spreadsheets_url']
           @worksheet_title = task['worksheet_title']
           @auth = auth
           @pager = pager
@@ -24,16 +24,16 @@ module Embulk
           @application_name ||= 'embulk-input-google_spreadsheets'
         end
 
-        def spreadsheet_id
-          SpreadsheetsUrlUtil.capture_id(spreadsheet_url)
+        def spreadsheets_id
+          SpreadsheetsUrlUtil.capture_id(spreadsheets_url)
         end
 
-        def spreadsheet
-          service.get_spreadsheet(spreadsheet_id, ranges: worksheet_title, include_grid_data: false)
+        def spreadsheets
+          service.get_spreadsheet(spreadsheets_id, ranges: worksheet_title, include_grid_data: false)
         end
 
         def worksheet
-          spreadsheet.sheets.first
+          spreadsheets.sheets.first
         end
 
         def worksheet_properties
@@ -54,8 +54,8 @@ module Embulk
 
         def worksheet_values(range)
           range = "#{worksheet_title}!#{range}"
-          logger.info { "`embulk-input-google_spreadsheets`: load data from spreadsheet: '#{spreadsheet_url}', range: '#{range}'" }
-          service.get_spreadsheet_values(spreadsheet_id, range).values
+          logger.info { "`embulk-input-google_spreadsheets`: load data from spreadsheet: '#{spreadsheets_url}', range: '#{range}'" }
+          service.get_spreadsheet_values(spreadsheets_id, range).values
         end
 
         def worksheet_each_record(&block)

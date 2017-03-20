@@ -101,15 +101,15 @@ module Embulk
         #
         #   if `auth_method` is `compute_engine` or `application_default`, this
         #   option is not required.
-        task['json_keyfile']           = config.param('json_keyfile',           LocalFile, default: nil)
-        task['spreadsheets_url']       = config.param('spreadsheets_url',        :string)
+        task['json_keyfile']           = config.param('json_keyfile',          LocalFile, default: nil)
+        task['spreadsheets_url']       = config.param('spreadsheets_url',       :string)
         task['worksheet_title']        = config.param('worksheet_title',        :string)
         task['start_column']           = config.param('start_column',           :integer, default: 1)
         task['start_row']              = config.param('start_row',              :integer, default: 1)
         task['end_row']                = config.param('end_row',                :integer, default: -1)
         task['max_fetch_rows']         = config.param('max_fetch_rows',         :integer, default: 10000)
         task['null_string']            = config.param('null_string',            :string,  default: '')
-        task['stop_on_invalid_record']  = config.param('stop_on_invalid_record', :bool,    default: true)
+        task['stop_on_invalid_record'] = config.param('stop_on_invalid_record', :bool,    default: true)
         # columns: this option supposes an array of hash has the below structure.
         #   - name
         #   - type
@@ -117,8 +117,8 @@ module Embulk
         #   - timezone
         #   - typecast: default: strict
         CustomColumns.default_format   = task['default_timestamp_format'] = config.param('default_timestamp_format', :string, default: CustomColumns.default_format)
-        CustomColumns.default_timezone = task['default_timezone']        = config.param('default_timezone',        :string, default: CustomColumns.default_timezone)
-        CustomColumns.default_typecast = task['default_typecast']        = config.param('default_typecast',        :string, default: CustomColumns.default_typecast)
+        CustomColumns.default_timezone = task['default_timezone']         = config.param('default_timezone',         :string, default: CustomColumns.default_timezone)
+        CustomColumns.default_typecast = task['default_typecast']         = config.param('default_typecast',         :string, default: CustomColumns.default_typecast)
         task['columns'] = config.param('columns', CustomColumns)
 
         task['end_column'] = task['start_column'] + task['columns'].length - 1

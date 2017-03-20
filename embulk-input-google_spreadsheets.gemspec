@@ -21,5 +21,4 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'google-api-client', '>= 0.9.15'
   spec.add_dependency 'tzinfo'
-  spec.add_dependency 'ini_file'
 end

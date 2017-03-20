@@ -34,12 +34,11 @@ module Embulk
             range = range(start_row_num, end_row_num)
             page = client.worksheet_values(range)
 
-            results = page.map do |record|
+            all_processed = page.each do |record|
               break false if no_limit? and empty_record?(record)
               yield(record)
-              true
             end
-            break unless results.all?
+            break unless !!all_processed
 
             last_fetched_row_num = end_row_num
             logger.info { "`embulk-input-google_spreadsheets`: last fetched row number: #{last_fetched_row_num}" }

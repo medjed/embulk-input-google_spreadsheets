@@ -12,7 +12,7 @@ module Embulk
             return nil if null_string?(value)
             value.to_s
           rescue NoMethodError => e
-            raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to String: \"#{value}\" because of '#{e}'"
+            raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to String: \"#{value}\" because of '#{e}'"
           end
 
           def as_long(value)
@@ -20,7 +20,7 @@ module Embulk
             return nil if null_string?(value)
             value.to_i
           rescue NoMethodError => e
-            raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to Long: \"#{value}\" because of '#{e}'"
+            raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to Long: \"#{value}\" because of '#{e}'"
           end
 
           def as_double(value)
@@ -28,7 +28,7 @@ module Embulk
             return nil if null_string?(value)
             value.to_f
           rescue NoMethodError => e
-            raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to Double: \"#{value}\" because of '#{e}'"
+            raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to Double: \"#{value}\" because of '#{e}'"
           end
 
           def as_boolean(value)
@@ -46,10 +46,10 @@ module Embulk
               when 'false'
                 false
               else
-                raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast '#{value}' to a boolean value."
+                raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast '#{value}' to a boolean value."
               end
             else
-              raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to a boolean value: \"#{value}\""
+              raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to a boolean value: \"#{value}\""
             end
           end
 
@@ -67,7 +67,7 @@ module Embulk
               Time.parse(value)
             end
           rescue ArgumentError, TypeError, NoMethodError => e
-            raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to Time: \"#{value}\" because of '#{e}'"
+            raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to Time: \"#{value}\" because of '#{e}'"
           end
 
           def as_json(value)
@@ -89,13 +89,13 @@ module Embulk
               begin
                 JSON.parse(value)
               rescue JSON::ParserError => e
-                raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to JSON: \"#{value}\" because of '#{e}'"
+                raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to JSON: \"#{value}\" because of '#{e}'"
               end
             when Time
               # TODO: support Time class. Now call Exception to avoid format/timezone trouble.
-              raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast Time to JSON: \"#{value}\""
+              raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast Time to JSON: \"#{value}\""
             else
-              raise GoogleSpreadsheets::TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to JSON: \"#{value}\""
+              raise TypecastError.new "`embulk-input-google_spreadsheets`: cannot typecast #{value.class} to JSON: \"#{value}\""
             end
           end
 

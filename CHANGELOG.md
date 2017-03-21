@@ -52,7 +52,8 @@
 ##### Others
 - Add tests
 - Rename this plugin's name to `embulk-input-google_spreadsheets`
-
+- Start CI
+  - https://travis-ci.org/medjed/embulk-input-google_spreadsheets
 
 0.3.0 (2017-03-08)
 ==================

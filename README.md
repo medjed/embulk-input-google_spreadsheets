@@ -1,5 +1,7 @@
 # Google Spreadsheets input plugin for Embulk
 
+[![Build Status](https://secure.travis-ci.org/medjed/embulk-input-google_spreadsheets.png?branch=master)](http://travis-ci.org/medjed/embulk-input-google_spreadsheets)
+
 Embulk input plugin to load records from Google Spreadsheets.
 
 ## Overview

@@ -530,15 +530,13 @@ module Embulk
           end
         end
 
-        sub_test_case 'call ConfigError' do
+        sub_test_case 'call TypecastError' do
           test 'invalid timezone format' do
-            assert_embulk_raise ConfigError do
+            assert_embulk_raise TypecastError do
               Typecast::StrictTypecast.new(least_task).as_timestamp('2015-12-15 09:31:09 UTC', nil, 'JST')
             end
           end
-        end
 
-        sub_test_case 'call TypecastError' do
           test 'value is TrueClass' do
             assert_embulk_raise TypecastError do
               Typecast::StrictTypecast.new(least_task).as_timestamp(true)

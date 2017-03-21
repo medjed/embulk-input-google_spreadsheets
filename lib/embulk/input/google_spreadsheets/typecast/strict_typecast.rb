@@ -1,5 +1,6 @@
+require 'time_with_zone'
 require_relative 'base'
-require_relative 'time_with_zone'
+require_relative 'timestamp_format_util'
 
 module Embulk
   module Input
@@ -167,10 +168,12 @@ module Embulk
               return nil if value.is_a?(String) and value.empty?
               value = value.to_s unless value.is_a?(String)
               begin
-                if timestamp_format and timezone
+                if timestamp_format and TimestampFormatUtil.timezone_format?(timestamp_format)
+                  Time.strptime(value, timestamp_format)
+                elsif timestamp_format and timezone
                   TimeWithZone.strptime_with_zone(value, timestamp_format, timezone)
                 elsif timezone
-                  TimeWithZone.time_parse_with_zone(value, timezone)
+                  TimeWithZone.parse_with_zone(value, timezone)
                 elsif timestamp_format
                   Time.strptime(value, timestamp_format)
                 else

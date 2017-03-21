@@ -3,6 +3,8 @@
 require 'test/unit'
 require 'test/unit/rr'
 
+ENV['TZ'] = 'JST-9'
+
 require 'embulk'
 Embulk.setup
 Embulk.logger = Embulk::Logger.new('/dev/null')

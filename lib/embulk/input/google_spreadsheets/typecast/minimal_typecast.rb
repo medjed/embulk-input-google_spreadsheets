@@ -74,8 +74,6 @@ module Embulk
             return nil if value.nil?
             return nil if null_string?(value)
 
-            return nil if null_string?(value)
-
             # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/lib/embulk/page_builder.rb#L20
             # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/embulk-core/src/main/java/org/embulk/spi/util/DynamicPageBuilder.java#L97
             # cf. https://github.com/embulk/embulk/blob/191ffd50e555565be77f810db15a21ba66cb7bf6/embulk-core/src/main/java/org/embulk/spi/util/DynamicColumnSetterFactory.java#L66

@@ -123,7 +123,7 @@ module Embulk
 
         task['end_column'] = task['start_column'] + task['columns'].length - 1
 
-        logger.debug { "`embulk-input-google_spreadsheets`: configured task '#{task.to_json}'"}
+        logger.debug { "`embulk-input-google_spreadsheets`: configured task '#{task.reject{|k, v| k == 'json_keyfile'}.to_json}'"}
         task
       end
 

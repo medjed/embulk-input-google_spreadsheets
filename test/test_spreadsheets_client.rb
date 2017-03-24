@@ -74,6 +74,13 @@ else
           assert_equal(expect, result)
         end
 
+        test 'multi byte worksheet title' do
+          omit 'Skip until closing this issue https://github.com/sporkmonger/addressable/issues/258'
+
+          assert_embulk_nothing_raised do
+            client('worksheet_title' => TEST_WORKSHEET_TITLE_MULTI_BYTE).worksheet_values('A1:C1')
+          end
+        end
       end
     end
   end

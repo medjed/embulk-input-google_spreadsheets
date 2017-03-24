@@ -17,4 +17,5 @@ JSON_KEYFILE_AUTHORIZED_USER = File.join(EXAMPLE_ROOT, 'authorized_user_credenti
 TEST_SPREADSHEETS_URL = 'https://docs.google.com/spreadsheets/d/1Cxz-LudQuhRAGZL8mBoHs6mRnpjODpyF4Rwc5UYoV1E/edit#gid=0'
 TEST_SPREADSHEETS_ID = '1Cxz-LudQuhRAGZL8mBoHs6mRnpjODpyF4Rwc5UYoV1E'
 TEST_WORKSHEET_TITLE = 'sheet1'
+TEST_WORKSHEET_TITLE_MULTI_BYTE = '日本語（japanese）'
 DUMMY_RSA_KEY = File.expand_path('dummy.key', __dir__) # openssl genrsa 2048 > dummy.key

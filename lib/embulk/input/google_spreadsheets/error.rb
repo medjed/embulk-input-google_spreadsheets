@@ -1,10 +1,12 @@
 module Embulk
   module Input
-    class Googlespreadsheet < InputPlugin
+
+    class GoogleSpreadsheets < InputPlugin
+
       module Traceable
-        def initialize(e)
-          message = e.is_a?(String) ? "" : "(#{e.class}) "
-          message << "#{e}\n"
+        def initialize(e, more_msg = nil)
+          message = e.is_a?(String) ? '' : "(#{e.class}) "
+          message << "#{e}#{more_msg}\n"
           message << "\tat #{e.backtrace.join("\n\tat ")}\n" if e.respond_to?(:backtrace)
 
           while e.respond_to?(:cause) and e.cause
@@ -26,9 +28,9 @@ module Embulk
         include Traceable
       end
 
-      class UnmatchedNumberOfColomnsError < DataError; end
-      class TypeCastError      < DataError; end
-      class UnknownTypeError   < DataError; end
+      class TypecastError < DataError
+      end
+
     end
   end
 end

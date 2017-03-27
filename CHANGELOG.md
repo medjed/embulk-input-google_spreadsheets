@@ -56,11 +56,11 @@
   - https://travis-ci.org/medjed/embulk-input-google_spreadsheets
   
 #### Known Issues
-- Some multi-byte strings cannot be used as a worksheet title.
+- [Some multi-byte strings cannot be used as a worksheet title.](https://github.com/medjed/embulk-input-google_spreadsheets/issues/6)
   - For example, `（`, `）` are replaced by `(`, `)`
   - https://github.com/sporkmonger/addressable/issues/258
   - https://github.com/google/google-api-ruby-client/issues/557
-- Emoji cannot be used as a worksheet title.
+- [Emoji cannot be used as a worksheet title.](https://github.com/medjed/embulk-input-google_spreadsheets/issues/7)
   - https://github.com/embulk/embulk/issues/574
   - the above issue is already closed. so this issue will be fixed at next version of embulk.
 

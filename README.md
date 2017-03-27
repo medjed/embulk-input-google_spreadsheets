@@ -88,3 +88,7 @@ $ bundle exec rake release
 ## ChangeLog
 
 [CHANGELOG.md](CHANGELOG.md)
+
+## Known Issues
+
+[Github Issues](https://github.com/medjed/embulk-input-google_spreadsheets/issues)

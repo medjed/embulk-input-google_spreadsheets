@@ -3,7 +3,7 @@
 
 ### Now, embulk-input-googlespreadsheet is recreated as embulk-input-google_spreadsheets, so this release has **lots of breaking changes**.
 
-##### About Configuration
+#### About Configuration
 - Remove `account` option because this parameter can be set by `json_keyfile` or internal processing.
 - Change acceptable values of `auth_method` option to `service_account`, `authorized_user`, `compute_engine`, and `application_default`.
   - `json_key` is renamed to `service_account`.
@@ -21,7 +21,7 @@
   - You can choose `strict`, `loose`, `minimal`.
   - You can set default by `default_typecast` option.
 
-##### About Behaviours
+#### About Behaviours
 - Improve memory usage
   - The previous implementation loads all data (includes other worksheets) from the spreadsheets at once by each task, so embulk uses lots of memory.
   - This version loads data from the specified worksheet for each numerical value specified by `max_fetch_rows` option.
@@ -49,13 +49,13 @@
   - Support loose typecasting.
   - Support minimal typecasting.
   
-##### Others
+#### Others
 - Add tests
 - Rename this plugin's name to `embulk-input-google_spreadsheets`
 - Start CI
   - https://travis-ci.org/medjed/embulk-input-google_spreadsheets
   
-##### Known Issues
+#### Known Issues
 - Some multi-byte strings cannot be used as a worksheet title.
   - For example, `（`, `）` are replaced by `(`, `)`
   - https://github.com/sporkmonger/addressable/issues/258

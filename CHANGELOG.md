@@ -1,4 +1,4 @@
-1.0.0 (2017-03-17)
+1.0.0 (2017-03-27)
 ==================
 
 ### Now, embulk-input-googlespreadsheet is recreated as embulk-input-google_spreadsheets, so this release has **lots of breaking changes**.

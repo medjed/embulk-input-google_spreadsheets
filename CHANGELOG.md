@@ -54,6 +54,14 @@
 - Rename this plugin's name to `embulk-input-google_spreadsheets`
 - Start CI
   - https://travis-ci.org/medjed/embulk-input-google_spreadsheets
+  
+##### Known Issues
+- Some multi-byte strings cannot be used as a worksheet title.
+  - For example, `（`, `）` are replaced by `(`, `)`
+  - https://github.com/sporkmonger/addressable/issues/258
+  - https://github.com/google/google-api-ruby-client/issues/557
+- Emoji cannot be used as a worksheet title.
+  - https://github.com/embulk/embulk/issues/574
 
 0.3.0 (2017-03-08)
 ==================

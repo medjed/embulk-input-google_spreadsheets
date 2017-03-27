@@ -75,7 +75,7 @@ else
         end
 
         test 'multi byte worksheet title' do
-          omit 'Skip until closing this issue https://github.com/sporkmonger/addressable/issues/258'
+          omit 'Skip until closing this issue https://github.com/medjed/embulk-input-google_spreadsheets/issues/6'
 
           assert_embulk_nothing_raised do
             client('worksheet_title' => TEST_WORKSHEET_TITLE_MULTI_BYTE).worksheet_values('A1:C1')

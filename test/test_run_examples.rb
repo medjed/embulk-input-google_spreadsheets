@@ -46,7 +46,7 @@ module Embulk
           puts "'#{JSON_KEYFILE_AUTHORIZED_USER}' is not found. Skip case authorized_user"
         else
           test 'authorized_user' do
-            omit 'Skip until resolving https://github.com/embulk/embulk/issues/574'
+            omit 'Skip until closing https://github.com/medjed/embulk-input-google_spreadsheets/issues/6'
             assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_authorized_user_emoji_worksheet.yml'))
           end
         end
@@ -55,7 +55,7 @@ module Embulk
           puts "'#{JSON_KEYFILE_SERVICE_ACCOUNT}' is not found. Skip case service_account"
         else
           test 'service_account' do
-            omit 'Skip until resolving https://github.com/embulk/embulk/issues/574'
+            omit 'Skip until closing https://github.com/medjed/embulk-input-google_spreadsheets/issues/6' 
             assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_service_account_emoji_worksheet.yml'))
           end
         end

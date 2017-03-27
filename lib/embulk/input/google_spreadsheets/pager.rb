@@ -33,6 +33,7 @@ module Embulk
 
             range = range(start_row_num, end_row_num)
             page = client.worksheet_values(range)
+            break unless page # no values
 
             all_processed = page.each do |record|
               break false if no_limit? and empty_record?(record)
@@ -69,6 +70,8 @@ module Embulk
         end
 
         def empty_record?(record)
+          return true unless record
+          return true if record.empty?
           record.all?{|v| v.nil? or v.empty?}
         end
 

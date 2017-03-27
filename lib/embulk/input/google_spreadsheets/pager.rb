@@ -23,6 +23,7 @@ module Embulk
         def each_record(client, &block)
           max_row_num = max_accessible_row_num(client)
 
+          total_fetched_rows = 0
           last_fetched_row_num = start_row - 1
           while true do
             start_row_num = last_fetched_row_num + 1
@@ -33,16 +34,22 @@ module Embulk
 
             range = range(start_row_num, end_row_num)
             page = client.worksheet_values(range)
-            break unless page # no values
+            unless page # no values
+              logger.warn { '`embulk-input-google_spreadsheets`: no data is found.' } if total_fetched_rows <= 0
+              break
+            end
 
-            all_processed = page.each do |record|
+            num_fetched_rows = 0
+            page.each do |record|
               break false if no_limit? and empty_record?(record)
+              num_fetched_rows += 1
               yield(record)
             end
-            break unless !!all_processed
+            total_fetched_rows = total_fetched_rows + num_fetched_rows
+            logger.info { "`embulk-input-google_spreadsheets`: fetched #{num_fetched_rows} rows in #{range} (tatal: #{total_fetched_rows} rows)" }
+            break if num_fetched_rows < max_fetch_rows
 
             last_fetched_row_num = end_row_num
-            logger.info { "`embulk-input-google_spreadsheets`: last fetched row number: #{last_fetched_row_num}" }
             break if last_fetched_row_num >= max_row_num
           end
         end

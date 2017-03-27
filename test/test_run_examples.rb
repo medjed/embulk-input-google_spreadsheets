@@ -60,6 +60,66 @@ module Embulk
           end
         end
       end
+
+      sub_test_case 'run no data case' do
+        unless File.exist?(JSON_KEYFILE_AUTHORIZED_USER)
+          puts "'#{JSON_KEYFILE_AUTHORIZED_USER}' is not found. Skip case authorized_user"
+        else
+          test 'authorized_user' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_authorized_user_no_data.yml'))
+          end
+        end
+
+        unless File.exist?(JSON_KEYFILE_SERVICE_ACCOUNT)
+          puts "'#{JSON_KEYFILE_SERVICE_ACCOUNT}' is not found. Skip case service_account"
+        else
+          test 'service_account' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_service_account_no_data.yml'))
+          end
+        end
+      end
+
+      sub_test_case 'run empty rows appears at the same as max fetch rows case' do
+        unless File.exist?(JSON_KEYFILE_AUTHORIZED_USER)
+          puts "'#{JSON_KEYFILE_AUTHORIZED_USER}' is not found. Skip case authorized_user"
+        else
+          test 'authorized_user' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_authorized_user_empty_rows_appears_at_the_same_as_max_fetch_rows.yml'))
+          end
+        end
+
+        unless File.exist?(JSON_KEYFILE_SERVICE_ACCOUNT)
+          puts "'#{JSON_KEYFILE_SERVICE_ACCOUNT}' is not found. Skip case service_account"
+        else
+          test 'service_account' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_service_account_empty_rows_appears_at_the_same_as_max_fetch_rows.yml'))
+          end
+        end
+      end
+
+      sub_test_case 'run large data case' do
+        unless File.exist?(JSON_KEYFILE_AUTHORIZED_USER)
+          puts "'#{JSON_KEYFILE_AUTHORIZED_USER}' is not found. Skip case authorized_user"
+        else
+          test 'authorized_user' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_authorized_user_large_data.yml'))
+          end
+        end
+
+        unless File.exist?(JSON_KEYFILE_SERVICE_ACCOUNT)
+          puts "'#{JSON_KEYFILE_SERVICE_ACCOUNT}' is not found. Skip case service_account"
+        else
+          test 'service_account' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_service_account_large_data.yml'))
+          end
+        end
+      end
     end
   end
 end

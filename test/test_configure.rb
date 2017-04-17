@@ -54,6 +54,7 @@ module Embulk
           assert_equal(-1, task['end_row'])
           assert_equal(10000, task['max_fetch_rows'])
           assert_equal('', task['null_string'])
+          assert_equal('FORMATTED_VALUE', task['value_render_option'])
           assert_equal(true, task['stop_on_invalid_record'])
           assert_equal('%Y-%m-%d %H:%M:%S.%N %z', task['default_timestamp_format'])
           assert_equal('UTC', task['default_timezone'])

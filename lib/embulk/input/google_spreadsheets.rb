@@ -108,6 +108,9 @@ module Embulk
         task['start_row']              = config.param('start_row',              :integer, default: 1)
         task['end_row']                = config.param('end_row',                :integer, default: -1)
         task['max_fetch_rows']         = config.param('max_fetch_rows',         :integer, default: 10000)
+        # FORMATTED_VALUE, UNFORMATTED_VALUE, FORMULA are available.
+        # ref. https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption
+        task['value_render_option']    = config.param('value_render_option',    :string,  default: 'FORMATTED_VALUE')
         task['null_string']            = config.param('null_string',            :string,  default: '')
         task['stop_on_invalid_record'] = config.param('stop_on_invalid_record', :bool,    default: true)
         # columns: this option supposes an array of hash has the below structure.

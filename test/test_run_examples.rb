@@ -120,6 +120,26 @@ module Embulk
           end
         end
       end
+
+      sub_test_case 'run unformatted value' do
+        unless File.exist?(JSON_KEYFILE_AUTHORIZED_USER)
+          puts "'#{JSON_KEYFILE_AUTHORIZED_USER}' is not found. Skip case authorized_user"
+        else
+          test 'authorized_user' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_authorized_user_unformatted_value.yml'))
+          end
+        end
+
+        unless File.exist?(JSON_KEYFILE_SERVICE_ACCOUNT)
+          puts "'#{JSON_KEYFILE_SERVICE_ACCOUNT}' is not found. Skip case service_account"
+        else
+          test 'service_account' do
+
+            assert_true embulk_run(File.join(EXAMPLE_ROOT, 'config_service_account_unformatted_value.yml'))
+          end
+        end
+      end
     end
   end
 end

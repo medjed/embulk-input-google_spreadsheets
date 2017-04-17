@@ -79,7 +79,11 @@ module Embulk
         def empty_record?(record)
           return true unless record
           return true if record.empty?
-          record.all?{|v| v.nil? or v.empty?}
+          record.all? do |v|
+            next true if v.nil?
+            next true if v.is_a?(String) and v.empty?
+            false
+          end
         end
 
         def no_limit?

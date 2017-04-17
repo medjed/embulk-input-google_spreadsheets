@@ -7,11 +7,12 @@ module Embulk
 
       class SpreadsheetsClient
 
-        attr_accessor :spreadsheets_url, :worksheet_title, :auth, :pager
+        attr_accessor :spreadsheets_url, :worksheet_title, :value_render_option, :auth, :pager
 
         def initialize(task, auth:, pager:)
           @spreadsheets_url = task['spreadsheets_url']
           @worksheet_title = task['worksheet_title']
+          @value_render_option = task['value_render_option']
           @auth = auth
           @pager = pager
         end
@@ -54,8 +55,11 @@ module Embulk
 
         def worksheet_values(range)
           range = "#{worksheet_title}!#{range}"
-          logger.info { "`embulk-input-google_spreadsheets`: load data from spreadsheet: '#{spreadsheets_url}', range: '#{range}'" }
-          service.get_spreadsheet_values(spreadsheets_id, range).values
+          logger.info {
+            "`embulk-input-google_spreadsheets`: load data from spreadsheet: '#{spreadsheets_url}'," \
+            " range: '#{range}', value_render_option: '#{value_render_option}'"
+          }
+          service.get_spreadsheet_values(spreadsheets_id, range, value_render_option: value_render_option).values
         end
 
         def worksheet_each_record(&block)

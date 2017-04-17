@@ -21,6 +21,7 @@ Embulk input plugin to load records from Google Spreadsheets.
 | end_row            | integer     | optional    | `-1`            | `-1` means loading records until an empty record appears. |
 | max_fetch_rows     | integer     | optional    | `10000`        |  Load data from a worksheet for each numerical value specified by this option. |
 | null_string        | string      | optional    | `''`            |  Replace this value to `NULL` |
+| value_render_option| string      | optional    | `'FORMATTED_VALUE'`| `'FORMATTED_VALUE'`, `'UNFORMATTED_VALUE'`, `'FORMULA'` are available. See [the `value_render_option` document](https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption).|
 | stop_on_invalid_record | boolean | optional    | `true`          |  |
 | default_timestamp_format | string | optional | `'%Y-%m-%d %H:%M:%S.%N %z'` | |
 | default_timezone | string | optional | `'UTC'` | |

@@ -1,3 +1,8 @@
+1.1.0 (2017-04-18)
+==================
+- New Feature: Support `value_render_option` option.
+  - https://github.com/medjed/embulk-input-google_spreadsheets/pull/9
+
 1.0.0 (2017-03-27)
 ==================
 

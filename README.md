@@ -52,6 +52,19 @@ Embulk input plugin to load records from Google Spreadsheets.
   * `minimal`  : typecast minimally.
 
 
+## Prepare JSON file for auth_method: authorized_user
+
+You may use [example/setup_authorized_user_credentials.rb](example/setup_authorized_user_credentials.rb) to prepare OAuth token.
+
+Go to GCP console > API Manager > Credentials > Create 'OAuth Client ID'. Get the client id and client secret.
+
+Run `setup_authorized_user_credentials.rb` to get `refresh_token`.
+
+```
+bundle --path vendor/bundle
+bundle exec ruby example/setup_authorized_user_credentials.rb
+```
+
 ## Development
 
 ### Run example:

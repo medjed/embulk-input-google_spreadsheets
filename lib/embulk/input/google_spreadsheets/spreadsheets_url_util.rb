@@ -14,7 +14,7 @@ module Embulk
         end
 
         def self.capture_id_regex
-          @capture_id_regex ||= %r{#{base_url}([^/]+)/.*}
+          @capture_id_regex ||= %r{#{base_url}([^/]+).*}
         end
       end
     end

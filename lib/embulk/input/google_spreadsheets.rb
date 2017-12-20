@@ -178,6 +178,16 @@ module Embulk
 
         task_report = {}
         return task_report
+
+      rescue Google::Apis::Error => e
+        logger.error {
+          m  = "Error: #{e.class}"
+          m << ", Message: #{e.message}"        if e.message
+          m << ", StatusCode: #{e.status_code}" if e.status_code
+          m << ", Body: #{e.body}"              if e.body
+          m
+        }
+        raise e
       end
     end
   end

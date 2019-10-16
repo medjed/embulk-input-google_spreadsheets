@@ -1,3 +1,8 @@
+1.1.1 (2019-10-17)
+==================
+- Maintenance: Lock signet and google-api-client version (thanks to @hiroyuki-sato)
+  - https://github.com/medjed/embulk-input-google_spreadsheets/pull/14
+
 1.1.0 (2017-04-18)
 ==================
 - New Feature: Support `value_render_option` option.

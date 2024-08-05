@@ -67,6 +67,10 @@ module Embulk
 
         def max_accessible_row_num(client)
           sheets_max = client.worksheet_max_row_num
+          if start_row > sheets_max
+            raise ConfigError.new("`embulk-input-google_spreadsheets`: start_row `#{start_row}` is larger than spreadsheets max row `#{sheets_max}`")
+          end
+
           if end_row > sheets_max
             raise ConfigError.new("`embulk-input-google_spreadsheets`: end_row `#{end_row}` is larger than spreadsheets max row `#{sheets_max}`")
           end
